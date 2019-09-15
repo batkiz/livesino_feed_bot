@@ -1,71 +1,85 @@
 ﻿using System;
-using System.Linq;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using CodeHollow.FeedReader;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
-namespace livesino_feed_bot
+namespace livesino_rss_bot
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var botClient = new TelegramBotClient("BOT TOKEN HERE");
+            // your bot token here
+            const string BotToken = "";
 
-            string url = "https://livesino.net/feed";
-            string titles_name = "titles-livesino.txt";
-            string titles_path = Environment.CurrentDirectory;
+            var botClient = new TelegramBotClient(BotToken);
 
-            while (true)
+            const string url = "https://livesino.net/feed";
+            const string titlesName = "titles-livesino.txt";
+            var titlesPath = Environment.CurrentDirectory;
+
+            for (; ; )
             {
-                string all_titles = System.IO.File.ReadAllText(Path.Combine(titles_path, titles_name));
-                // titles file as the database
+                // 保存文章标题作为数据库
+                var allTitles = File.ReadAllText(Path.Combine(titlesPath, titlesName));
 
                 var urlsTask = FeedReader.GetFeedUrlsFromUrlAsync(url);
                 urlsTask.ConfigureAwait(false);
-                var urls = urlsTask.Result;
 
-                string feedUrl = url;
+                var feedUrl = url;
 
                 var readerTask = FeedReader.ReadAsync(feedUrl);
                 readerTask.ConfigureAwait(false);
 
                 foreach (var item in readerTask.Result.Items)
                 {
-                    if (!all_titles.Contains(item.Title))
+                    if (allTitles.Contains(item.Title))
                     {
-                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(titles_path, titles_name), true))
-                        {
-                            outputFile.WriteLine(item.Title);
-                        }
+                        continue;
+                    }
+                    using (var outputFile = new StreamWriter(Path.Combine(titlesPath, titlesName), true))
+                    {
+                        outputFile.WriteLine(item.Title);
+                    }
 
-                        System.Console.WriteLine(item.Title);
-                        var Content = Regex.Replace(item.Content, "<img.*?/>", "");
-                        // remove the img tag
-                        Content = Regex.Replace(Content, "<.p?>", "");
-                        // remove <p> and <p/> tag
-                        Content = Regex.Replace(Content, "<a.*?pvxt.*?促销.*?阅读原文.*?>", "");
-                        // remove the ads
+                    var content = RmUselessInfo(RmUselessTag(item.Content));
 
-                        botClient.SendTextMessageAsync(
-                            chatId: "@livesino",
-                            text: $"<b>{item.Title}\n\n</b>{Content}\n{item.Link}",
-                            parseMode: ParseMode.Html
-                        );
-                        // rss to telegram
-                        // ATTENTION: html tags are not all supported
+                    Console.WriteLine($"{item.Title}\n{content}\n{item.Link}");
+
+
+                    // 未验证
+                    // 如果 content 里包含不支持的标签，则仅发送标题与链接
+                    try
+                    {
+                        botClient.SendTextMessageAsync(chatId: "@livesino",
+                                                       text: $"<b>{item.Title}</b>\n\n{content}\n{item.Link}",
+                                                       parseMode: ParseMode.Html);
+                        // ATTENTION: html tags are NOT ALL supported
                         // checkout https://core.telegram.org/bots/api#html-style
+                    }
+                    catch (System.Exception)
+                    {
+                        botClient.SendTextMessageAsync(chatId: "@livesino",
+                                                       text: $"<b>{item.Title}</b>\n\n{item.Link}",
+                                                       parseMode: ParseMode.Html);
                     }
                 }
 
-                System.Console.WriteLine($"yet another try at {DateTime.Now}");
+                Console.WriteLine($"yet another try at {DateTime.Now}");
+                // refresh every 10 minutes
                 Thread.Sleep(600000);
-                // refresh every 10 min
             }
         }
+
+        // 去除广告及阅读原文信息
+        static Func<string, string> RmUselessInfo = content =>
+            Regex.Replace(content, "<a.*?pvxt.*?促销.*?阅读原文.*?>", "");
+        // 去除不受支持的标签
+        static Func<string, string> RmUselessTag = content =>
+            Regex.Replace(content, "<br />|<.p?>|<img.*?/>|<.strong?>|<.li?>|<.ul?>", "");
+        // static Func<string, string> ReplaceImg = content => Regex.Replace(content, "<img.*?(https?://.*.(?:png|jpg))*?/>", "(https?://.*.(?:png|jpg))");
     }
 }
