@@ -1,0 +1,13 @@
+~version: "2.1"
+
+?path: /archives/.*
+
+site_name: "LiveSino"
+description: //meta[@name="description"]/content
+author: //span[@class="post-meta-author"]
+# published_date: //time[@class="post-meta-date"]
+title: //h1[@class="post-title"]
+body: //div[@class="post-content"]
+cover: //div[@class="post-image"]/img[1]
+<div>: $body//p/img/parent::p
+channel: "@livesino"
