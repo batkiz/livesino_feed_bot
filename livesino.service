@@ -1,0 +1,15 @@
+[Unit]
+Description=livesino auto restart
+After=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Restart=always
+RestartSec=30s
+TimeoutStopSec=120s
+WorkingDirectory=/home/ubuntu/livesino
+ExecStart=/usr/bin/screen -Dm -S livesino /home/ubuntu/livesino/LivesinoBot                                                                    
+
+[Install]
+WantedBy=multi-user.target

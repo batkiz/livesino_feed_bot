@@ -5,7 +5,7 @@ using CodeHollow.FeedReader;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
-namespace LivesinoIVBot
+namespace livesino_feed_bot
 {
     class Program
     {
@@ -44,7 +44,7 @@ namespace LivesinoIVBot
                     var ivLink = $"https://t.me/iv?url={item.Link}&rhash=e0127ad0c39cac";
 
                     botClient.SendTextMessageAsync(chatId: "@livesino", text: $"<b>{item.Title}</b>\n{ivLink}", parseMode: ParseMode.Html);
-                    System.Console.WriteLine(ivLink);
+                    Console.WriteLine(ivLink);
                 }
 
                 Console.WriteLine($"yet another try at {DateTime.Now}");
