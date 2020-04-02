@@ -10,6 +10,8 @@ namespace livesino_feed_bot
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Start job");
+
             string Token = args[0];
             const string url = "https://livesino.net/feed";
             const string titlesName = "titles-livesino.txt";
@@ -41,8 +43,10 @@ namespace livesino_feed_bot
                 botClient.SendTextMessageAsync(chatId: "@livesino",
                                                text: $"<b>{item.Title}</b>\n{ivLink}",
                                                parseMode: ParseMode.Html);
-                Console.WriteLine(ivLink);
+                Console.WriteLine($"{item.Title}\n{ivLink}");
             }
+
+            Console.WriteLine("Done");
         }
     }
 }
