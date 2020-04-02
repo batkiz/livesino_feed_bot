@@ -18,7 +18,7 @@ jobs:
         run: |
           cd ./src
           dotnet restore
-          dotnet run ${{ BotToken }}
+          dotnet run ${{ secrets.BotToken }}
       - uses: stefanzweifel/git-auto-commit-action@v4.1.1
         with:
           commit_message: "[Auto] update"
