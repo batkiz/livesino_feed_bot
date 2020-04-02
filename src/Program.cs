@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Threading;
 using CodeHollow.FeedReader;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
@@ -9,46 +8,40 @@ namespace livesino_feed_bot
 {
     class Program
     {
-        static string Token = "";
-        const string url = "https://livesino.net/feed";
-        const string titlesName = "titles-livesino.txt";
-        static string titlesPath = Environment.CurrentDirectory;
-
         static void Main(string[] args)
         {
+            string Token = args[0];
+            const string url = "https://livesino.net/feed";
+            const string titlesName = "titles-livesino.txt";
+            string titlesPath = Environment.CurrentDirectory;
+
             var botClient = new TelegramBotClient(Token);
 
-            for (; ; )
+            var allTitles = File.ReadAllText(Path.Combine(titlesPath, titlesName));
+
+            var urlsTask = FeedReader.GetFeedUrlsFromUrlAsync(url);
+            urlsTask.ConfigureAwait(false);
+
+            var readerTask = FeedReader.ReadAsync(url);
+            readerTask.ConfigureAwait(false);
+
+            foreach (var item in readerTask.Result.Items)
             {
-                var allTitles = File.ReadAllText(Path.Combine(titlesPath, titlesName));
-
-                var urlsTask = FeedReader.GetFeedUrlsFromUrlAsync(url);
-                urlsTask.ConfigureAwait(false);
-
-                var readerTask = FeedReader.ReadAsync(url);
-                readerTask.ConfigureAwait(false);
-
-                foreach (var item in readerTask.Result.Items)
+                if (allTitles.Contains(item.Title))
                 {
-                    if (allTitles.Contains(item.Title))
-                    {
-                        continue;
-                    }
-                    using (var outputFile = new StreamWriter(Path.Combine(titlesPath, titlesName), true))
-                    {
-                        outputFile.WriteLine(item.Title);
-                    }
-
-                    Console.WriteLine($"{item.Title}\n{item.Link}\n");
-
-                    var ivLink = $"https://t.me/iv?url={item.Link}&rhash=e0127ad0c39cac";
-
-                    botClient.SendTextMessageAsync(chatId: "@livesino", text: $"<b>{item.Title}</b>\n{ivLink}", parseMode: ParseMode.Html);
-                    Console.WriteLine(ivLink);
+                    continue;
+                }
+                using (var outputFile = new StreamWriter(Path.Combine(titlesPath, titlesName), true))
+                {
+                    outputFile.WriteLine(item.Title);
                 }
 
-                Console.WriteLine($"yet another try at {DateTime.Now}");
-                Thread.Sleep(600000);
+                var ivLink = $"https://t.me/iv?url={item.Link}&rhash=e0127ad0c39cac";
+
+                botClient.SendTextMessageAsync(chatId: "@livesino",
+                                               text: $"<b>{item.Title}</b>\n{ivLink}",
+                                               parseMode: ParseMode.Html);
+                Console.WriteLine(ivLink);
             }
         }
     }
