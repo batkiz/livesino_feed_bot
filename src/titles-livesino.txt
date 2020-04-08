@@ -9,3 +9,4 @@ Slack CEO：Slack 和 Microsoft Teams 语音视频将互通
 GitHub Mobile 应用正式发布
 微软 3 月 30 日线上发布会宣布 Microsoft 365 消费者版
 GitHub 收购 NPM
+微软从今至明年 7 月会议均改为线上会议
