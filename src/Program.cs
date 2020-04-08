@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.IO;
 using CodeHollow.FeedReader;
@@ -45,6 +46,8 @@ namespace livesino_feed_bot
                                                parseMode: ParseMode.Html);
                 Console.WriteLine($"{item.Title}\n{ivLink}");
             }
+
+            Thread.Sleep(5000);
 
             Console.WriteLine("Done");
         }
