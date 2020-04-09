@@ -11,3 +11,4 @@ GitHub Mobile 应用正式发布
 GitHub 收购 NPM
 微软从今至明年 7 月会议均改为线上会议
 Windows 10 新预览版 File Explorer 集成 WSL Linux 文件系统
+传 Windows 10X 双屏设备推迟到明年
