@@ -14,3 +14,4 @@ Windows 10 新预览版 File Explorer 集成 WSL Linux 文件系统
 传 Windows 10X 双屏设备推迟到明年
 GitHub 团队私仓免费
 Windows 10 May 2020 更新（20H1）正式候选版发布
+微软将于 5 月推出新的 Windows 10 启动器
