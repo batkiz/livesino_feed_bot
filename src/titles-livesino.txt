@@ -20,3 +20,4 @@ Surface Book 3 和 Surface Go 2 新信息泄漏，预计春季发布
 Office 365 正式升级至 Microsoft 365
 Windows 10 新预览版：Your Phone 控制手机音乐播放、搜索框支持 Bing COVID-19
 微软 2020 财年 Q3 财报：几乎没有疫情负面影响
+Build 2020 线上开发者会议开放免费注册
