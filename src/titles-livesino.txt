@@ -1,25 +1,10 @@
-// placeholder
-微软 Bing 测试 Fluent Design 风格新 Logo
-Edge 新功能预告：垂直 Tabs、智能复制、密码泄漏检查、增强隐私模式等
-部分 Office 365 企业版更名至 Microsoft 365 旗下
-微软将于 4 月 21 日正式发布 Microsoft 365 消费者版，全面升级 Office 365
-Slack CEO：Slack 和 Microsoft Teams 语音视频将互通
-微软开始内部测试 xCloud for Windows 10
-微软 10 亿装机量庆祝视频展示 Windows 10 新界面
-GitHub Mobile 应用正式发布
-微软 3 月 30 日线上发布会宣布 Microsoft 365 消费者版
-GitHub 收购 NPM
-微软从今至明年 7 月会议均改为线上会议
-Windows 10 新预览版 File Explorer 集成 WSL Linux 文件系统
-传 Windows 10X 双屏设备推迟到明年
-GitHub 团队私仓免费
-Windows 10 May 2020 更新（20H1）正式候选版发布
-微软将于 5 月推出新的 Windows 10 启动器
-15 英寸 AMD 处理器版 Surface Laptop 3 评测
-Surface Book 3 和 Surface Go 2 新信息泄漏，预计春季发布
-Office 365 正式升级至 Microsoft 365
-Windows 10 新预览版：Your Phone 控制手机音乐播放、搜索框支持 Bing COVID-19
-微软 2020 财年 Q3 财报：几乎没有疫情负面影响
-Build 2020 线上开发者会议开放免费注册
-微软调整 Windows 10X 战略：传统单屏幕设备优先级更高
-微软新设备 Surface Go 2 外观图泄漏
+微软新版 Windows 预览版：推送新 Fluent 开始菜单
+微软发布已删除文件恢复工具 Windows File Recovery
+微软计划永久关闭 Microsoft Store 实体零售店
+微软关闭游戏直播服务 Mixer，并与 Facebook Gaming 合作
+Microsoft Teams 消费者版发布预览版
+Windows 10 20H2 更新开始测试，新版 Edge 将内置于 20H2
+微软调整全公司 Insider 计划，Windows 10 更新分支都将统一更名
+Surface Book 3 国行版开始预定
+Windows 10 May 2020 更新正式推送
+Microsoft Edge 浏览器内置冲浪小游戏彩蛋上线
