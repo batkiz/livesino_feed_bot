@@ -1,15 +1,16 @@
-if ($args[0] -eq "linux")
-{
-    $Env:GOOS = "linux";
-    $Env:GOARCH = "amd64";
+param (
+  [String]$Os = $Env:GOOS,
+  [String]$Arch = $ENV:GOARCH
+)
 
-    go build
-}
+$DefaultOs = "windows"
+$DefaultArch = "amd64"
 
-if ($args[0] -eq "win")
-{
-    $Env:GOOS = "windows";
-    $Env:GOARCH = "amd64";
 
-    go build
-}
+$Env:GOOS = $Os
+$ENV:GOARCH = $Arch
+
+go build
+
+$Env:GOOS = $DefaultOs
+$ENV:GOARCH = $DefaultArch
