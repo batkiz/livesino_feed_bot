@@ -33,3 +33,7 @@ msbuild.wrn
 
 src/.token
 src/.idea
+
+src-go/.idea
+src-go/.token
+src-go/*.exe

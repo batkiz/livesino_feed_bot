@@ -8,3 +8,4 @@ Windows 10 20H2 更新开始测试，新版 Edge 将内置于 20H2
 Surface Book 3 国行版开始预定
 Windows 10 May 2020 更新正式推送
 Microsoft Edge 浏览器内置冲浪小游戏彩蛋上线
+

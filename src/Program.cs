@@ -49,11 +49,7 @@ namespace livesino_feed_bot
 
                     botClient.SendTextMessageAsync("@livesino",
                         $"<b>{item.Title}</b>\n{ivLink}",
-                        ParseMode.Html,
-                        replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithUrl(
-                            "原文链接",
-                            $"{item.Link}"
-                        ))
+                        ParseMode.Html
                     );
 
                     Console.WriteLine($"{item.Title}\n{ivLink}");
