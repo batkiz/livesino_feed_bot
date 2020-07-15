@@ -48,8 +48,8 @@ func main() {
 
 				log.Println(text)
 
-				msg := tgbotapi.NewMessage(-1001169390347, text)
-				// msg := tgbotapi.NewMessageToChannel("@livesino", text)
+				// msg := tgbotapi.NewMessage(-1001169390347, text)
+				msg := tgbotapi.NewMessageToChannel("@livesino", text)
 
 				msg.ParseMode = tgbotapi.ModeHTML
 
