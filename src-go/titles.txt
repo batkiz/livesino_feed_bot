@@ -9,4 +9,5 @@ Surface Book 3 国行版开始预定
 Windows 10 May 2020 更新正式推送
 Microsoft Edge 浏览器内置冲浪小游戏彩蛋上线
 微软分拆小冰部门并独立发展
+Outlook 将支持集成 Google 日历
 Microsoft Teams 大更新：同框场景模式，更多协作和 Cortana 集成

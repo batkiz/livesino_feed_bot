@@ -12,14 +12,32 @@ import (
 )
 
 func main() {
-	var token, _ = ioutil.ReadFile(".token")
-	var bot, _ = tgbotapi.NewBotAPI(string(token))
+	tokenStr, err := ioutil.ReadFile(".token")
+	if err != nil {
+		log.Println(err)
+	}
 
+	token := strings.TrimRight(string(tokenStr), "\n")
+
+	bot, err := tgbotapi.NewBotAPI(token)
+	if err != nil {
+		log.Println(err)
+	}
 
 	for true {
-		titles, _ := ioutil.ReadFile("titles.txt")
+		titles, err := ioutil.ReadFile("titles.txt")
+		if err != nil {
+			log.Println(err)
+		}
 
-		items := fetchRss()
+		feed, err := gofeed.NewParser().ParseURL("https://livesino.net/feed")
+		if err != nil {
+			log.Println(err)
+		}
+
+		log.Println(feed.Title)
+
+		items := feed.Items
 
 		for _, item := range items {
 			if !strings.Contains(string(titles), item.Title) {
@@ -30,8 +48,8 @@ func main() {
 
 				log.Println(text)
 
-				// msg := tgbotapi.NewMessage(-1001169390347, text)
-				msg := tgbotapi.NewMessageToChannel("@livesino", text)
+				msg := tgbotapi.NewMessage(-1001169390347, text)
+				// msg := tgbotapi.NewMessageToChannel("@livesino", text)
 
 				msg.ParseMode = tgbotapi.ModeHTML
 
@@ -43,26 +61,32 @@ func main() {
 
 				msg.ReplyMarkup = btn
 
-				if _, err := bot.Send(msg); err != nil {
-					log.Panic(err)
+				m, err := bot.Send(msg)
+
+				log.Println(m)
+
+				if err != nil {
+					log.Println(err)
 				}
 
-				f, _ := os.OpenFile("titles.txt", os.O_APPEND|os.O_WRONLY, 0600)
-				_, _ = f.WriteString(item.Title)
+				f, err := os.OpenFile("titles.txt", os.O_APPEND|os.O_WRONLY, 0600)
+				if err != nil {
+					log.Println(err)
+				}
 
-				_ = f.Close()
+				_, err = f.WriteString(item.Title + "\n")
+				if err != nil {
+					log.Println(err)
+				}
+
+				err = f.Close()
+				if err != nil {
+					log.Println(err)
+				}
 			}
 		}
 
 		log.Println()
 		time.Sleep(time.Duration(10) * time.Minute)
 	}
-}
-
-func fetchRss() []*gofeed.Item {
-	feed, _ := gofeed.NewParser().ParseURL("https://livesino.net/feed")
-
-	log.Println(feed.Title)
-
-	return feed.Items
 }
